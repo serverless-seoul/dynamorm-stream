@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+- '6'
+script:
+- npm run lint
+- npm run test
+deploy:
+  provider: npm
+  email: breath103@gmail.com
+  skip_cleanup: true
+  api_key:
+    secure: txv29udR8swYhJLb49IrBHJumysxRt4/szZtGqnTeYVF/bDXsMztPMtZhl1yG1qZReCpRgQZxXCSDCH5Uy2cqrlu/tssXlbbIYSYi3mtvwMdpCdFyLwIdf+5iq+lfmEIVPkVx2Lsl/XVgEtOKmSTEocQL/xYKTGyHl6iUvDFv9hzTnLpJqw9e5lfXqycy9gSKN1atT3WFRcBDoJDyk7XRxUGfFVSurgKFLrZByAWTVbitqHjB5d6enOSGQKZNPABLwds8JsPm56QpC4MnxxgA1AXJgmKKt94rSwjaLJ/dARD3TZG1uNuZ5ToSYPMmamKmMY/YZKcoXNYYNSJORiZ+De3c9BfLp8DtEk5EiBlRsofNUvMyLrye047qjLc7C3DpUfcGPRyg6kG276JgHdQPImfe+J/vAz7Z3CRsbEwJSrghku8DV0vCsh6hN4Wp+iLe+6NxNAQ3R5k+gIHeQR9PXgWAzD/1PoQEqrBgybovOjBbxtz6a8wMhcNDcU1XDhDq9Tiqs3EEdYEhXMjgLv4mSmdz2JU459/JP4//PElFJlSdybj0jHdmarefB6aI10HzHvaUIYRdv52ZroXhO6BUdrBZaONbM8V2Ob/nPwl3UXzePhiU3Ddw0t/ppHOP6cpe4+vHXm7z2bo5+5aH6AaP6fDGQQKkYuvtCzBbk+lsHY=
+  on:
+    branch: master
