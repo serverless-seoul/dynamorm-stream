@@ -11,7 +11,7 @@ Then commonly, you connect DynamoDB Stream to lambda and wrote
 export function handler(event, content) {
   event.records.forEach((record) => {
     if (record.eventName === "INSERT") {
-      SlackNotifier.notify(`${record.dynamodb.newImage.S}`)
+      SlackNotifier.notify(`${record.dynamodb.newImage.S}`);
     }
   })
 }
@@ -30,8 +30,8 @@ But clearly, there are some missing things here,
   Then you would wrote code like
 ```typescript
 export function handler(event, content) {
-  await notifySlack(event.records.filter(record => record.eventName === "INSERT");
-  await backuptoS3(event.records.filter(record => record.eventName === "REMOVE");
+  await notifySlack(event.records.filter(record => record.eventName === "INSERT"));
+  await backuptoS3(event.records.filter(record => record.eventName === "REMOVE"));
 }
 ```
   And this is really dangerous if `backuptoS3` throws Error.  
@@ -42,13 +42,13 @@ export function handler(event, content) {
 ```typescript
 export function handler(event, content) {
   try {
-    await notifySlack(event.records.filter(record => record.eventName === "INSERT");
+    await notifySlack(event.records.filter(record => record.eventName === "INSERT"));
   } catch (e) {
     console.error(e);    
   }
 
   try {
-    await backuptoS3(event.records.filter(record => record.eventName === "REMOVE");
+    await backuptoS3(event.records.filter(record => record.eventName === "REMOVE"));
   } catch (e) {
     console.error(e);    
   }
