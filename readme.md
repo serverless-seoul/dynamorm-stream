@@ -116,9 +116,9 @@ export const handler = DynamoTypesStream.createLambdaHandler(
         }
       }
     ],
-    async catchError(handlerDefintion, events, error) {
+    async catchError(handlerDefinition, events, error) {
       // This is global Error handler
-      console.log(handlerDefintion.name, events, error)
+      console.log(handlerDefinition.name, events, error)
       // --> "New Card Error", [{ event: "deleted", oldRecord: new Card(), new Error("XXX")];
     }
   )
