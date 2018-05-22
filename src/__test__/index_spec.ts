@@ -39,9 +39,12 @@ const handler = createLambdaHandler(
   createTableHandler(Card, "Series", [
     {
       eventType: "INSERT",
+      name: "Test Handler",
       async handler(events) {
         //
       },
     },
-  ]),
+  ], async (handlerDef, events, error) => {
+    console.log(handlerDef.name, events, error);
+  }),
 );
