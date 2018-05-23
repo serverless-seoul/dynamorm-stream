@@ -78,24 +78,31 @@ export function createLambdaHandler(handler: (event: DynamoDBStreamEvent) => Pro
 
 export type HandlerDefinition<T> = {
   eventType: "INSERT",
+  name: string,
   handler: (events: Array<InsertStreamEvent<T>>) => Promise<void>,
 } | {
   eventType: "MODIFY",
+  name: string,
   handler: (events: Array<ModifyStreamEvent<T>>) => Promise<void>,
 } | {
   eventType: "REMOVE",
+  name: string,
   handler: (events: Array<RemoveStreamEvent<T>>) => Promise<void>,
 } | {
   eventType: "INSERT, MODIFY",
+  name: string,
   handler: (events: Array<InsertStreamEvent<T> | ModifyStreamEvent<T>>) => Promise<void>,
 } | {
   eventType: "MODIFY, REMOVE",
+  name: string,
   handler: (events: Array<ModifyStreamEvent<T> | RemoveStreamEvent<T>>) => Promise<void>,
 } | {
   eventType: "INSERT, REMOVE",
+  name: string,
   handler: (events: Array<InsertStreamEvent<T> | RemoveStreamEvent<T>>) => Promise<void>,
 } | {
   eventType: "ALL",
+  name: string,
   handler: (events: Array<StreamEvent<T>>) => Promise<void>,
 };
 
@@ -109,52 +116,65 @@ export function createTableHandler<T extends Table>(
   tableClass: ITable<T>,
   strategy: "Map" | "Series" = "Series",
   handlers: Array<HandlerDefinition<T>>,
+  catchError: (
+    handlerDefinition: HandlerDefinition<T>,
+    events: Array<StreamEvent<T>>,
+    error: Error
+  ) => Promise<void> | void
 ) {
   return async (event: DynamoDBStreamEvent): Promise<void> => {
     const records = parseEvent(tableClass, event);
 
-    const executeHandler = (handlerDefinition: HandlerDefinition<T>) => {
-      switch (handlerDefinition.eventType) {
-        case "INSERT":
-          return handlerDefinition.handler(
-            valueFilter(records.map((record) => record.type === "INSERT" ? record : null)),
-          );
-        case "MODIFY":
-          return handlerDefinition.handler(
-            valueFilter(records.map((record) => record.type === "MODIFY" ? record : null)),
-          );
-        case "REMOVE":
-          return handlerDefinition.handler(
-            valueFilter(records.map((record) => record.type === "REMOVE" ? record : null)),
-          );
-        case "INSERT, MODIFY":
-          return handlerDefinition.handler(
-            valueFilter(records.map((record) => record.type === "INSERT" || record.type === "MODIFY" ? record : null)),
-          );
-        case "MODIFY, REMOVE":
-          return handlerDefinition.handler(
-            valueFilter(records.map((record) => record.type === "MODIFY" || record.type === "REMOVE" ? record : null)),
-          );
-        case "INSERT, REMOVE":
-          return handlerDefinition.handler(
-            valueFilter(records.map((record) => record.type === "INSERT" || record.type === "REMOVE" ? record : null)),
-          );
-        case "ALL":
-          return handlerDefinition.handler(valueFilter(records));
-      }
-    };
-
     switch (strategy) {
       case "Series":
         for (const handler of handlers) {
-          await executeHandler(handler);
+          try {
+            await executeHandler(handler, records);
+          } catch (error) {
+            catchError(handler, records, error);
+          }
         }
         return;
       case "Map":
-        await Promise.all(handlers.map((handler) => {
-          return executeHandler(handler);
+        await Promise.all(handlers.map(async (handler) => {
+          try {
+            await executeHandler(handler, records);
+          } catch (error) {
+            catchError(handler, records, error);
+          }
         }));
         return;
     }
   };
+}
+
+function executeHandler<T>(handlerDefinition: HandlerDefinition<T>, records: Array<StreamEvent<T>>) {
+  switch (handlerDefinition.eventType) {
+    case "INSERT":
+      return handlerDefinition.handler(
+        valueFilter(records.map((record) => record.type === "INSERT" ? record : null)),
+      );
+    case "MODIFY":
+      return handlerDefinition.handler(
+        valueFilter(records.map((record) => record.type === "MODIFY" ? record : null)),
+      );
+    case "REMOVE":
+      return handlerDefinition.handler(
+        valueFilter(records.map((record) => record.type === "REMOVE" ? record : null)),
+      );
+    case "INSERT, MODIFY":
+      return handlerDefinition.handler(
+        valueFilter(records.map((record) => record.type === "INSERT" || record.type === "MODIFY" ? record : null)),
+      );
+    case "MODIFY, REMOVE":
+      return handlerDefinition.handler(
+        valueFilter(records.map((record) => record.type === "MODIFY" || record.type === "REMOVE" ? record : null)),
+      );
+    case "INSERT, REMOVE":
+      return handlerDefinition.handler(
+        valueFilter(records.map((record) => record.type === "INSERT" || record.type === "REMOVE" ? record : null)),
+      );
+    case "ALL":
+      return handlerDefinition.handler(valueFilter(records));
+  }
 }
