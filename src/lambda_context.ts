@@ -1,3 +1,13 @@
+// Response
+interface Response {
+    statusCode: number;
+    headers: {
+        [key: string]: any;
+        "Content-Type": string;
+    };
+    body: string;
+}
+
 export interface LambdaContext {
     // Properties
     functionName: string;
