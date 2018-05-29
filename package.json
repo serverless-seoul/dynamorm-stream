@@ -1,6 +1,6 @@
 {
   "name": "dynamo-types-stream",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "DynamoDB Stream Framework",
   "main": "./dst/index.js",
   "typings": "./dst/index.d.ts",
