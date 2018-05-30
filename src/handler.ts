@@ -1,7 +1,7 @@
 import { Codec, Metadata, Table } from "dynamo-types";
 
 // Helpers
-import { DynamoDBStreamEvent, DynamoDBStreamEventRecord } from "./dynamodb_stream_event";
+import { DynamoDBStreamEvent } from "./dynamodb_stream_event";
 import { LambdaContext } from "./lambda_context";
 
 export interface InsertStreamEvent<T> {

@@ -1,7 +1,7 @@
 import * as chai from "chai";
 const expect = chai.expect;
 
-import { Config, Decorator, Query, Table} from "dynamo-types";
+import { Config, Decorator, Query, Table } from "dynamo-types";
 
 @Decorator.Table({ name: `cards` })
 class Card extends Table {
@@ -33,7 +33,7 @@ afterEach(async () => {
   await Card.dropTable();
 });
 
-import { createTableHandler, createLambdaHandler } from "../index";
+import { createLambdaHandler, createTableHandler } from "../index";
 
 const handler = createLambdaHandler(
   createTableHandler(Card, "Series", [
@@ -45,6 +45,7 @@ const handler = createLambdaHandler(
       },
     },
   ], async (handlerDef, events, error) => {
+    // tslint:disable-next-line
     console.log(handlerDef.name, events, error);
   }),
 );
