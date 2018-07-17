@@ -5,9 +5,14 @@
         "noImplicitAny": true,
         "sourceMap": true,
         "outDir": "dst",
-        "emitDecoratorMetadata": true,
+        "strictNullChecks": true,
         "experimentalDecorators": true,
-        "strictNullChecks": true
+        "emitDecoratorMetadata": true,
+        "noUnusedLocals": true,
+        "lib": [
+            "esnext",
+            "esnext.asynciterable"
+        ]
     },
     "include": [
         "src/**/*"
