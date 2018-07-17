@@ -53,33 +53,51 @@ export class TableHandler<T extends Table> {
 }
 
 async function executeHandler<T>(handlerDefinition: HandlerDefinition<T>, records: Array<StreamEvent<T>>) {
-  switch (handlerDefinition.eventType) {
-    case "INSERT":
-      return await handlerDefinition.handler(
-        valueFilter(records.map((record) => record.type === "INSERT" ? record : null)),
-      );
-    case "MODIFY":
-      return await handlerDefinition.handler(
-        valueFilter(records.map((record) => record.type === "MODIFY" ? record : null)),
-      );
-    case "REMOVE":
-      return await handlerDefinition.handler(
-        valueFilter(records.map((record) => record.type === "REMOVE" ? record : null)),
-      );
-    case "INSERT, MODIFY":
-      return await handlerDefinition.handler(
-        valueFilter(records.map((record) => record.type === "INSERT" || record.type === "MODIFY" ? record : null)),
-      );
-    case "MODIFY, REMOVE":
-      return await handlerDefinition.handler(
-        valueFilter(records.map((record) => record.type === "MODIFY" || record.type === "REMOVE" ? record : null)),
-      );
-    case "INSERT, REMOVE":
-      return await handlerDefinition.handler(
-        valueFilter(records.map((record) => record.type === "INSERT" || record.type === "REMOVE" ? record : null)),
-      );
-    case "ALL":
-      return await handlerDefinition.handler(valueFilter(records));
+  const { handler, filteredRecords } = (() => {
+    switch (handlerDefinition.eventType) {
+      case "INSERT":
+        return {
+          handler: handlerDefinition.handler,
+          filteredRecords: valueFilter(records.map((record) => record.type === "INSERT" ? record : null))
+        };
+      case "MODIFY":
+        return {
+          handler: handlerDefinition.handler,
+          filteredRecords: valueFilter(records.map((record) => record.type === "MODIFY" ? record : null)),
+        };
+      case "REMOVE":
+        return {
+          handler: handlerDefinition.handler,
+          filteredRecords: valueFilter(records.map((record) => record.type === "REMOVE" ? record : null)),
+        };
+      case "INSERT, MODIFY":
+        return {
+          handler: handlerDefinition.handler,
+          filteredRecords: valueFilter(
+            records.map((record) => record.type === "INSERT" || record.type === "MODIFY" ? record : null)),
+        };
+      case "MODIFY, REMOVE":
+        return {
+          handler: handlerDefinition.handler,
+          filteredRecords: valueFilter(
+            records.map((record) => record.type === "MODIFY" || record.type === "REMOVE" ? record : null)),
+        };
+      case "INSERT, REMOVE":
+        return {
+          handler: handlerDefinition.handler,
+          filteredRecords: valueFilter(
+            records.map((record) => record.type === "INSERT" || record.type === "REMOVE" ? record : null)),
+        };
+      case "ALL":
+        return {
+          handler: handlerDefinition.handler,
+          filteredRecords: valueFilter(records),
+        };
+    }
+  })();
+
+  if (filteredRecords.length > 0) {
+    await handler(filteredRecords);
   }
 }
 
