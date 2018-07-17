@@ -45,17 +45,25 @@ import { StreamHandler, TableHandler } from "../index";
 
 describe("E2E", () => {
   let streamHandler: StreamHandler;
-  let userHandlerCalled: boolean;
+  let userInsertHandlerCalled: boolean;
+  let userRemoveHandlerCalled: boolean;
   let cardHandlerCalled: boolean;
   beforeEach(() => {
-    userHandlerCalled = false;
+    userInsertHandlerCalled = false;
+    userRemoveHandlerCalled = false;
     const userHandler = new TableHandler(
       User, "Series",
       [{
         eventType: "INSERT",
         name: "Test Handler",
         async handler(events) {
-          userHandlerCalled = true;
+          userInsertHandlerCalled = true;
+        },
+      }, {
+        eventType: "REMOVE",
+        name: "Test Handler",
+        async handler(events) {
+          userRemoveHandlerCalled = true;
         },
       }],
       async (handlerDef, events, error) => {
@@ -100,7 +108,10 @@ describe("E2E", () => {
       } as any]
     });
 
-    expect(userHandlerCalled).to.be.eq(true);
+    expect(userInsertHandlerCalled).to.be.eq(true);
+    // Since there is only "Insert" event, this should not be called
+    expect(userRemoveHandlerCalled).to.be.eq(false);
+
     expect(cardHandlerCalled).to.be.eq(false);
   });
 });
