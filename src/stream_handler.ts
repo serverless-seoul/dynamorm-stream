@@ -39,7 +39,7 @@ export class StreamHandler {
         const handler = this.tableHandlerMap.get(streamMetadata.tableName);
         if (handler) {
           logger("handler: start table handler: %s", streamMetadata.tableName);
-          handler.handler(event);
+          await handler.handler(event);
         } else {
           logger("handler: sourceARN - %s, There is no table handler for arn", sourceARN);
         }
@@ -49,7 +49,7 @@ export class StreamHandler {
 
   public get lambdaHandler() {
     return async (event: DynamoDBStreamEvent, context: LambdaContext) => {
-      this.handler(event).then(
+      await this.handler(event).then(
         () => context.succeed(),
         (error) => context.fail(error),
       );

@@ -52,34 +52,34 @@ export class TableHandler<T extends Table> {
   }
 }
 
-function executeHandler<T>(handlerDefinition: HandlerDefinition<T>, records: Array<StreamEvent<T>>) {
+async function executeHandler<T>(handlerDefinition: HandlerDefinition<T>, records: Array<StreamEvent<T>>) {
   switch (handlerDefinition.eventType) {
     case "INSERT":
-      return handlerDefinition.handler(
+      return await handlerDefinition.handler(
         valueFilter(records.map((record) => record.type === "INSERT" ? record : null)),
       );
     case "MODIFY":
-      return handlerDefinition.handler(
+      return await handlerDefinition.handler(
         valueFilter(records.map((record) => record.type === "MODIFY" ? record : null)),
       );
     case "REMOVE":
-      return handlerDefinition.handler(
+      return await handlerDefinition.handler(
         valueFilter(records.map((record) => record.type === "REMOVE" ? record : null)),
       );
     case "INSERT, MODIFY":
-      return handlerDefinition.handler(
+      return await handlerDefinition.handler(
         valueFilter(records.map((record) => record.type === "INSERT" || record.type === "MODIFY" ? record : null)),
       );
     case "MODIFY, REMOVE":
-      return handlerDefinition.handler(
+      return await handlerDefinition.handler(
         valueFilter(records.map((record) => record.type === "MODIFY" || record.type === "REMOVE" ? record : null)),
       );
     case "INSERT, REMOVE":
-      return handlerDefinition.handler(
+      return await handlerDefinition.handler(
         valueFilter(records.map((record) => record.type === "INSERT" || record.type === "REMOVE" ? record : null)),
       );
     case "ALL":
-      return handlerDefinition.handler(valueFilter(records));
+      return await handlerDefinition.handler(valueFilter(records));
   }
 }
 
