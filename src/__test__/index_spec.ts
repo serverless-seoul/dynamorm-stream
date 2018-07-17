@@ -1,51 +1,138 @@
-import * as chai from "chai";
-const expect = chai.expect;
+import { expect } from "chai";
 
-import { Config, Decorator, Query, Table } from "dynamo-types";
+import * as AWS from "aws-sdk";
 
+import { Decorator, Query, Table } from "dynamo-types";
+
+// tslint:disable-next-line:max-classes-per-file
 @Decorator.Table({ name: `cards` })
 class Card extends Table {
-  @Decorator.FullPrimaryKey("id", "title")
-  public static readonly primaryKey: Query.FullPrimaryKey<Card, number, string>;
-
-  @Decorator.HashGlobalSecondaryIndex("title")
-  public static readonly titleIndex: Query.HashGlobalSecondaryIndex<Card, string>;
-
-  @Decorator.Writer()
-  public static readonly writer: Query.Writer<Card>;
+  @Decorator.HashPrimaryKey("id")
+  public static readonly primaryKey: Query.HashPrimaryKey<Card, number>;
 
   @Decorator.Attribute()
   public id: number;
 
   @Decorator.Attribute()
   public title: string;
-
-  // @Decorator.Attribute({ timeToLive: true })
-  @Decorator.Attribute()
-  public expiresAt: number;
 }
+
+// tslint:disable-next-line:max-classes-per-file
+@Decorator.Table({ name: `users` })
+class User extends Table {
+  @Decorator.HashPrimaryKey("id")
+  public static readonly primaryKey: Query.HashPrimaryKey<User, number>;
+
+  @Decorator.Attribute()
+  public id: number;
+
+  @Decorator.Attribute()
+  public username: string;
+}
+
 
 beforeEach(async () => {
   await Card.createTable();
+  await User.createTable();
 });
 
 afterEach(async () => {
   await Card.dropTable();
+  await User.dropTable();
 });
 
-import { createLambdaHandler, createTableHandler } from "../index";
+import { StreamHandler, TableHandler } from "../index";
 
-const handler = createLambdaHandler(
-  createTableHandler(Card, "Series", [
-    {
-      eventType: "INSERT",
-      name: "Test Handler",
-      async handler(events) {
-        //
-      },
-    },
-  ], async (handlerDef, events, error) => {
-    // tslint:disable-next-line
-    console.log(handlerDef.name, events, error);
-  }),
-);
+describe("E2E", () => {
+  let streamHandler: StreamHandler;
+  let userHandlerCalled: boolean;
+  let cardHandlerCalled: boolean;
+  beforeEach(() => {
+    userHandlerCalled = false;
+    const userHandler = new TableHandler(
+      User, "Series",
+      [{
+        eventType: "INSERT",
+        name: "Test Handler",
+        async handler(events) {
+          userHandlerCalled = true;
+        },
+      }],
+      async (handlerDef, events, error) => {
+        // tslint:disable-next-line
+        console.log(handlerDef.name, events, error);
+      });
+
+    cardHandlerCalled = false;
+    const cardHandler = new TableHandler(
+      Card, "Series",
+      [{
+        eventType: "INSERT",
+        name: "Test Handler",
+        async handler(events) {
+          cardHandlerCalled = true;
+        },
+      }],
+      async (handlerDef, events, error) => {
+        // tslint:disable-next-line
+        console.log(handlerDef.name, events, error);
+      });
+
+    streamHandler = new StreamHandler([
+      userHandler,
+      cardHandler,
+    ]);
+  });
+
+  it("should execute proper handler depends on event", async () => {
+    const user = new User();
+    user.id = 100;
+    user.username = "MEMEME";
+
+    await streamHandler.handler({
+      Records: [{
+        eventName: "INSERT",
+        dynamodb: {
+          ApproximateCreationDateTime: 1489631700,
+          NewImage: AWS.DynamoDB.Converter.marshall(user.serialize()),
+        },
+        eventSourceARN: "arn:aws:dynamodb:us-east-1:921281748045:table/users/stream/2017-12-22T02:02:25.496"
+      } as any]
+    });
+
+    expect(userHandlerCalled).to.be.eq(true);
+    expect(cardHandlerCalled).to.be.eq(false);
+  });
+});
+
+describe(StreamHandler.name, () => {
+  it("should raise error if there are duplicated table handler", async () => {
+    expect(() => {
+      return new StreamHandler([
+        new TableHandler(
+          User, "Series",
+          [{
+            eventType: "INSERT", name: "Test Handler",
+            async handler(events) {
+              //
+            },
+          }],
+          async (handlerDef, events, error) => {
+            //
+          }),
+        new TableHandler(
+          User, "Series",
+          [{
+            eventType: "INSERT",
+            name: "Test Handler",
+            async handler(events) {
+              //
+            },
+          }],
+          async (handlerDef, events, error) => {
+            //
+          })
+      ]);
+    }).to.throw("You can't put more than one handler for given table: users");
+  });
+});
