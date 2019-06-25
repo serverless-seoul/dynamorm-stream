@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "3.4.34",
+    "@types/chai": "4.1.7",
     "@types/chai-as-promised": "0.0.29",
     "@types/cli-color": "0.3.29",
     "@types/debug": "4.1.4",
@@ -26,7 +26,7 @@
     "@types/mocha": "2.2.32",
     "@types/node": "6.0.52",
     "aws-sdk": "2.243.1",
-    "chai": "3.5.0",
+    "chai": "4.2.0",
     "chai-as-promised": "6.0.0",
     "debug": "4.1.1",
     "dynamo-local": "0.0.4",
