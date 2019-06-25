@@ -1,6 +1,6 @@
 {
   "name": "dynamo-types-stream",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "DynamoDB Stream Framework",
   "main": "./dst/index.js",
   "typings": "./dst/index.d.ts",
@@ -12,37 +12,37 @@
     "test": "AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=mock AWS_SECRET_ACCESS_KEY=mock DYNAMO_TYPES_ENDPOINT=http://127.0.0.1:8000 mocha -t 20000 dst/**/__test__/**/*.js",
     "posttest": "npm run dynamodb:cleanup",
     "prepublish": "npm run build",
-    "ci:publish": "publish",
     "lint": "tslint -p tsconfig.json -c tslint.json 'src/**/*.ts'"
   },
-  "author": "",
+  "author": "Vingle, Inc. <eng@vingle.net>",
+  "engines": {
+    "node": "^8.10.0"
+  },
   "license": "ISC",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.27",
     "@types/chai": "4.1.7",
     "@types/chai-as-promised": "0.0.29",
     "@types/cli-color": "0.3.29",
     "@types/debug": "4.1.4",
-    "@types/faker": "4.1.2",
-    "@types/mocha": "2.2.32",
-    "@types/node": "6.0.52",
+    "@types/faker": "^4.1.5",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^8.10.49",
+    "@vingle/tslint-preset": "^1.0.0",
     "aws-sdk": "2.243.1",
     "chai": "4.2.0",
-    "chai-as-promised": "6.0.0",
     "debug": "4.1.1",
     "dynamo-local": "0.0.4",
-    "dynamo-types": "2.5.0",
+    "dynamo-types": "^2.7.0",
     "faker": "4.1.0",
     "local-dynamo": "0.5.0",
-    "mocha": "3.1.2",
-    "publish": "0.6.0",
-    "tslint": "5.10.0",
-    "typescript": "2.9.2"
+    "mocha": "^6.1.4",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.2"
   },
   "peerDependencies": {
-    "dynamo-types": ">=2.5.0",
-    "aws-sdk": ">=2.100.0",
-    "debug": ">=3.0.0",
-    "@types/debug": ">=0.0.30"
+    "dynamo-types": ">= 2.5.0",
+    "debug": ">= 3.0.0"
   },
   "dependencies": {}
 }
