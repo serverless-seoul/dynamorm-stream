@@ -1,2 +1,10 @@
 dst/__test__
 .npm
+.code
+.idea
+.github
+src
+.travis.yml
+renovate.json
+tslint.json
+tsconfig*.json
