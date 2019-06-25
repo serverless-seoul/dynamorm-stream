@@ -1,4 +1,7 @@
 # Dynamo Types Stream
+
+[![Build Status](https://travis-ci.org/balmbees/dynamo-typeorm-stream.svg?branch=master)](https://travis-ci.org/balmbees/dynamo-typeorm-stream)
+
 Framework for DynamoDB Stream Event processing on Lambda. Based on (https://github.com/balmbees/dynamo-typeorm)
 Powering [Vingle](https://www.vingle.net)
 
