@@ -16,6 +16,9 @@
     "lint": "tslint -p tsconfig.json -c tslint.json 'src/**/*.ts'"
   },
   "author": "",
+  "engines": {
+    "node": "^8.10.0"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "4.1.7",
@@ -24,7 +27,7 @@
     "@types/debug": "4.1.4",
     "@types/faker": "4.1.2",
     "@types/mocha": "2.2.32",
-    "@types/node": "6.0.52",
+    "@types/node": "^8.10.49",
     "aws-sdk": "2.243.1",
     "chai": "4.2.0",
     "chai-as-promised": "6.0.0",
