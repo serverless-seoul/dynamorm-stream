@@ -1,7 +1,7 @@
+import { Context } from "aws-lambda";
 import * as debug from "debug";
 
 import { DynamoDBStreamEvent } from "./dynamodb_stream_event";
-import { LambdaContext } from "./lambda_context";
 import { TableHandler } from "./table_handler";
 
 const logger = debug("dynamo-types-stream:StreamHandler");
@@ -48,11 +48,9 @@ export class StreamHandler {
   }
 
   public get lambdaHandler() {
-    return async (event: DynamoDBStreamEvent, context: LambdaContext) => {
-      await this.handler(event).then(
-        () => context.succeed(),
-        (error) => context.fail(error),
-      );
+    return async (event: DynamoDBStreamEvent, context: Context) => {
+      context.callbackWaitsForEmptyEventLoop = false;
+      return await this.handler(event);
     };
   }
 }
