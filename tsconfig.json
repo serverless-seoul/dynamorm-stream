@@ -3,6 +3,7 @@
         "module": "commonjs",
         "target": "es2017",
         "noImplicitAny": true,
+        "declaration": true,
         "sourceMap": true,
         "outDir": "dst",
         "strictNullChecks": true,
