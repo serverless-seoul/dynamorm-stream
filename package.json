@@ -12,7 +12,7 @@
     "test": "AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=mock AWS_SECRET_ACCESS_KEY=mock DYNAMO_TYPES_ENDPOINT=http://127.0.0.1:8000 mocha -t 20000 dst/**/__test__/**/*.js",
     "posttest": "npm run dynamodb:cleanup",
     "prepublish": "npm run build",
-    "ci:publish": "publish",
+    "ci:publish": "release-it --no-increment",
     "lint": "tslint -p tsconfig.json -c tslint.json 'src/**/*.ts'"
   },
   "author": "",
@@ -37,6 +37,7 @@
     "faker": "4.1.0",
     "local-dynamo": "0.5.0",
     "mocha": "^6.1.4",
+    "release-it": "^12.3.0",
     "tslint": "^5.18.0",
     "typescript": "^3.5.2"
   },
