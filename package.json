@@ -24,7 +24,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "4.2.3",
-    "@types/debug": "4.1.4",
+    "@types/debug": "4.1.5",
     "@types/faker": "^4.1.5",
     "@types/mocha": "^5.2.7",
     "@types/node": "^8.10.49",
