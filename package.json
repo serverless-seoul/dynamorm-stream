@@ -25,20 +25,20 @@
   "devDependencies": {
     "@types/chai": "4.2.3",
     "@types/debug": "4.1.5",
-    "@types/faker": "^4.1.5",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^8.10.49",
-    "@vingle/tslint-preset": "^1.0.0",
+    "@types/faker": "4.1.5",
+    "@types/mocha": "5.2.7",
+    "@types/node": "8.10.49",
+    "@vingle/tslint-preset": "1.0.0",
     "aws-sdk": "2.538.0",
     "chai": "4.2.0",
-    "debug": "^4.1.1",
+    "debug": "4.1.1",
     "dynamo-local": "0.0.4",
-    "dynamo-types": "^2.7.0",
+    "dynamo-types": "2.7.0",
     "faker": "4.1.0",
     "local-dynamo": "0.5.0",
-    "mocha": "^6.1.4",
-    "tslint": "^5.18.0",
-    "typescript": "^3.5.2"
+    "mocha": "6.1.4",
+    "tslint": "5.18.0",
+    "typescript": "3.5.2"
   },
   "peerDependencies": {
     "dynamo-types": ">= 2.5.0"
