@@ -38,7 +38,7 @@
     "local-dynamo": "0.5.0",
     "mocha": "6.2.1",
     "tslint": "5.20.0",
-    "typescript": "3.6.3"
+    "typescript": "3.6.4"
   },
   "peerDependencies": {
     "dynamo-types": ">= 2.5.0"
