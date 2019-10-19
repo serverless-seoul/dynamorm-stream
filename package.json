@@ -29,7 +29,7 @@
     "@types/mocha": "5.2.7",
     "@types/node": "8.10.55",
     "@vingle/tslint-preset": "1.0.0",
-    "aws-sdk": "2.548.0",
+    "aws-sdk": "2.553.0",
     "chai": "4.2.0",
     "debug": "4.1.1",
     "dynamo-local": "0.0.4",
