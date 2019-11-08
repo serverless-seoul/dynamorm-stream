@@ -27,7 +27,7 @@
     "@types/debug": "4.1.5",
     "@types/faker": "4.1.7",
     "@types/mocha": "5.2.7",
-    "@types/node": "8.10.58",
+    "@types/node": "8.10.59",
     "@vingle/tslint-preset": "1.0.0",
     "aws-sdk": "2.562.0",
     "chai": "4.2.0",
