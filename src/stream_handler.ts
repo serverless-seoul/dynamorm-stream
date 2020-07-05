@@ -4,7 +4,7 @@ import * as debug from "debug";
 import { DynamoDBStreamEvent } from "./dynamodb_stream_event";
 import { TableHandler } from "./table_handler";
 
-const logger = debug("dynamo-types-stream:StreamHandler");
+const logger = debug("@serverless-seoul/dynamorm-stream:StreamHandler");
 
 export class StreamHandler {
   public readonly tableHandlerMap: Map<string, TableHandler<any>>;

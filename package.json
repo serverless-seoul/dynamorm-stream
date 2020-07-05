@@ -19,7 +19,6 @@
     "url": "https://github.com/serverless-seoul/dynamorm-stream/issues"
   },
   "homepage": "https://github.com/serverless-seoul/dynamorm-stream",
-
   "scripts": {
     "clean": "rm -rf dst",
     "prebuild": "npm run clean",
@@ -27,6 +26,7 @@
     "build": "tsc && npm run build:copy",
     "pretest": "tsc -p tsconfig.test.json && npm run build:copy",
     "test": "AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=mock AWS_SECRET_ACCESS_KEY=mock mocha -t 20000 dst/**/__test__/**/*.js",
+    "test:ci": "npm run test -- --forbid-only",
     "prepublishOnly": "npm run build",
     "lint": "tslint -p tsconfig.json -c tslint.json 'src/**/*.ts'"
   },

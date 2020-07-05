@@ -1,9 +1,6 @@
 # Dynamo Types Stream
 
-[![Build Status](https://travis-ci.org/balmbees/dynamo-typeorm-stream.svg?branch=master)](https://travis-ci.org/balmbees/dynamo-typeorm-stream)
-
-Framework for DynamoDB Stream Event processing on Lambda. Based on (https://github.com/balmbees/dynamo-typeorm)
-Powering [Vingle](https://www.vingle.net)
+Framework for DynamoDB Stream Event processing on Lambda. Based on (https://github.com/serverless-seoul/dynamorm)
 
 ## What is this for?
 When you're using DynamoDB, it's common pattern to connect DynamoDB Stream to Lambda to do data change based background works.   
@@ -24,7 +21,7 @@ But clearly, there are some missing things here,
 
 ### 1) DynamoDB Record Parsing (ORM)
   Raw event format for DynamoDB Stream is pretty complicated.  
-  { a: 100 } represented as { a: { N: 100 } }, and there are [many other things](https://github.com/balmbees/dynamo-typeorm-stream/blob/master/src/dynamodb_stream_event.ts) you need know how to parse
+  { a: 100 } represented as { a: { N: 100 } }, and there are [many other things](https://github.com/serverless-seoul/dynamorm-stream/blob/master/src/dynamodb_stream_event.ts) you need know how to parse
 ### 2) Error Handling
   It's also common to connect several background process for single table.  
   For example, let's say you want to 
@@ -62,7 +59,7 @@ export function handler(event, content) {
 
 ## Usage
 ```typescript
-import { Decorator, Query, Table, Config } from "dynamo-types";
+import { Decorator, Query, Table, Config } from "@serverless-seoul/dynamorm";
 
 // First Define your DynamoDB Table
 @Decorator.Table({ name: "prod-Card" })
@@ -83,7 +80,7 @@ class Card extends Table {
   static readonly writer: Query.Writer<Card>;
 }
 
-import * as DynamoTypesStream from "dynamo-types-stream";
+import * as DynamoTypesStream from "@serverless-seoul/dynamorm-stream";
 
 
 

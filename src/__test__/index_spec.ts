@@ -2,7 +2,7 @@ import { expect } from "chai";
 
 import * as AWS from "aws-sdk";
 
-import { Decorator, Query, Table } from "dynamo-types";
+import { Decorator, Query, Table } from "@serverless-seoul/dynamorm";
 
 // tslint:disable-next-line:max-classes-per-file
 @Decorator.Table({ name: `cards` })

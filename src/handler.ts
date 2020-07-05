@@ -1,4 +1,4 @@
-import { Codec, Metadata, Table } from "dynamo-types";
+import { Codec, Metadata, Table } from "@serverless-seoul/dynamorm";
 
 import { DynamoDBStreamEvent } from "./dynamodb_stream_event";
 
