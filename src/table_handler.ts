@@ -1,4 +1,4 @@
-import { Table } from "dynamo-types";
+import { Table } from "@serverless-seoul/dynamorm";
 
 import {
   HandlerDefinition,
