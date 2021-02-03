@@ -22,9 +22,8 @@
   "scripts": {
     "clean": "rm -rf dst",
     "prebuild": "npm run clean",
-    "build:copy": "cd src && find . -name '*.json' -type f -exec cp {} ../dst/{} \\; && cd ..",
-    "build": "tsc && npm run build:copy",
-    "pretest": "tsc -p tsconfig.test.json && npm run build:copy",
+    "build": "tsc",
+    "pretest": "npm run build -- -p tsconfig.test.json",
     "test": "AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=mock AWS_SECRET_ACCESS_KEY=mock mocha -t 20000 dst/**/__test__/**/*.js",
     "test:ci": "npm run test -- --forbid-only",
     "prepublishOnly": "npm run build",
@@ -32,7 +31,7 @@
   },
   "author": "@serverless-seoul",
   "engines": {
-    "node": "^8.10.0"
+    "node": "^12.10.0"
   },
   "license": "ISC",
   "devDependencies": {

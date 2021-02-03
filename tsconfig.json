@@ -1,19 +1,16 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es2017",
+        "target": "es2019",
         "noImplicitAny": true,
         "declaration": true,
         "sourceMap": true,
+        "rootDir": "src",
         "outDir": "dst",
         "strictNullChecks": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "noUnusedLocals": true,
-        "lib": [
-            "esnext",
-            "esnext.asynciterable"
-        ]
+        "noUnusedLocals": true
     },
     "exclude": [
         "**/__test__/"
