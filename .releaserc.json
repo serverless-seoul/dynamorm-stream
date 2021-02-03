@@ -1,0 +1,3 @@
+{
+  "extends": "@catchfashion/semantic-release-config"
+}
