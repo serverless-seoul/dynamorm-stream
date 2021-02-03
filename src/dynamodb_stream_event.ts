@@ -1,7 +1,8 @@
-import * as AWS from "aws-sdk";
+// tslint:disable-next-line:no-submodule-imports
+import type * as DynamoDB from "aws-sdk/clients/dynamodb";
 
-export type KeySchema = AWS.DynamoDB.AttributeMap;
-export type DataSchema = AWS.DynamoDB.AttributeMap;
+export type KeySchema = DynamoDB.AttributeMap;
+export type DataSchema = DynamoDB.AttributeMap;
 
 export interface DynamoDBStreamCommonEventRecord {
   eventID: string;

@@ -1,8 +1,8 @@
-import { Context } from "aws-lambda";
+import type { Context } from "aws-lambda";
 import * as debug from "debug";
 
-import { DynamoDBStreamEvent } from "./dynamodb_stream_event";
-import { TableHandler } from "./table_handler";
+import type { DynamoDBStreamEvent } from "./dynamodb_stream_event";
+import type { TableHandler } from "./table_handler";
 
 const logger = debug("@serverless-seoul/dynamorm-stream:StreamHandler");
 

@@ -1,6 +1,6 @@
 import { Codec, Metadata, Table } from "@serverless-seoul/dynamorm";
 
-import { DynamoDBStreamEvent } from "./dynamodb_stream_event";
+import type { DynamoDBStreamEvent } from "./dynamodb_stream_event";
 
 export interface InsertStreamEvent<T> {
   type: "INSERT";

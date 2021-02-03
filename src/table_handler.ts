@@ -1,6 +1,6 @@
-import { Table } from "@serverless-seoul/dynamorm";
+import type { Table } from "@serverless-seoul/dynamorm";
 
-import {
+import type {
   HandlerDefinition,
   ITable,
   parseEvent,
