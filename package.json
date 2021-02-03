@@ -36,27 +36,26 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "4.2.11",
-    "@types/debug": "4.1.5",
-    "@types/faker": "4.1.10",
-    "@types/mocha": "5.2.7",
-    "@types/node": "8.10.59",
-    "@vingle/tslint-preset": "1.0.1",
-    "aws-sdk": "^2.300.0",
-    "chai": "4.2.0",
-    "debug": "4.1.1",
-    "@serverless-seoul/dynamorm": "^1.0.0",
-    "faker": "4.1.0",
-    "mocha": "6.2.2",
-    "tslint": "5.20.1",
-    "typescript": "3.7.5"
+    "@serverless-seoul/dynamorm": "^2.11.0",
+    "@types/chai": "^4.2.14",
+    "@types/debug": "^4.1.5",
+    "@types/faker": "^5.1.6",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^12.19.15",
+    "aws-sdk": "^2.835.0",
+    "chai": "^4.2.0",
+    "faker": "^5.3.1",
+    "mocha": "^8.2.1",
+    "tslint": "^6.1.3",
+    "typescript": "^4.1.3"
   },
   "peerDependencies": {
-    "@serverless-seoul/dynamorm": "^1.0.0",
+    "@serverless-seoul/dynamorm": "^2.0.0",
     "aws-sdk": "^2.300.0",
-    "@types/node": ">= 8.10.0"
+    "@types/node": ">= 12.10.0"
   },
   "dependencies": {
-    "@types/aws-lambda": "^8.10.27"
+    "@types/aws-lambda": "^8.10.71",
+    "debug": "^4.3.1"
   }
 }
