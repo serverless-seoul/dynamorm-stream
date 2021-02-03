@@ -3,9 +3,9 @@ import type { Table } from "@serverless-seoul/dynamorm";
 import type {
   HandlerDefinition,
   ITable,
-  parseEvent,
   StreamEvent,
 } from "./handler";
+import { parseEvent } from "./handler";
 
 import { DynamoDBStreamEvent } from "./dynamodb_stream_event";
 
