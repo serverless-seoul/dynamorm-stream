@@ -9,11 +9,11 @@ const logger = debug("@serverless-seoul/dynamorm-stream:StreamHandler");
 export class StreamHandler {
   public readonly tableHandlerMap: Map<string, TableHandler<any>>;
   constructor(
-    tableHandlers: Array<TableHandler<any>>
+    tableHandlers: TableHandler<any>[],
   ) {
     this.tableHandlerMap = new Map();
 
-    tableHandlers.forEach(handler => {
+    tableHandlers.forEach((handler) => {
       const tableName = handler.tableClass.metadata.name;
       if (this.tableHandlerMap.has(tableName)) {
         throw new Error(`You can't put more than one handler for given table: ${tableName}`);

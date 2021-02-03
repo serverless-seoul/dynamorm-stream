@@ -32,7 +32,7 @@ export interface ITable<T extends Table> {
 
 export function parseEvent<T extends Table>(
   tableClass: ITable<T>, event: DynamoDBStreamEvent,
-): Array<StreamEvent<T>> {
+): StreamEvent<T>[] {
   return event.Records.map((record) => {
     switch (record.eventName) {
       case "INSERT":
@@ -56,31 +56,31 @@ export function parseEvent<T extends Table>(
 }
 
 export type HandlerDefinition<T> = {
-  eventType: "INSERT",
-  name: string,
-  handler: (events: Array<InsertStreamEvent<T>>) => Promise<void>,
+  eventType: "INSERT";
+  name: string;
+  handler: (events: InsertStreamEvent<T>[]) => Promise<void>;
 } | {
-  eventType: "MODIFY",
-  name: string,
-  handler: (events: Array<ModifyStreamEvent<T>>) => Promise<void>,
+  eventType: "MODIFY";
+  name: string;
+  handler: (events: ModifyStreamEvent<T>[]) => Promise<void>;
 } | {
-  eventType: "REMOVE",
-  name: string,
-  handler: (events: Array<RemoveStreamEvent<T>>) => Promise<void>,
+  eventType: "REMOVE";
+  name: string;
+  handler: (events: RemoveStreamEvent<T>[]) => Promise<void>;
 } | {
-  eventType: "INSERT, MODIFY",
-  name: string,
-  handler: (events: Array<InsertStreamEvent<T> | ModifyStreamEvent<T>>) => Promise<void>,
+  eventType: "INSERT, MODIFY";
+  name: string;
+  handler: (events: (InsertStreamEvent<T> | ModifyStreamEvent<T>)[]) => Promise<void>;
 } | {
-  eventType: "MODIFY, REMOVE",
-  name: string,
-  handler: (events: Array<ModifyStreamEvent<T> | RemoveStreamEvent<T>>) => Promise<void>,
+  eventType: "MODIFY, REMOVE";
+  name: string;
+  handler: (events: (ModifyStreamEvent<T> | RemoveStreamEvent<T>)[]) => Promise<void>;
 } | {
-  eventType: "INSERT, REMOVE",
-  name: string,
-  handler: (events: Array<InsertStreamEvent<T> | RemoveStreamEvent<T>>) => Promise<void>,
+  eventType: "INSERT, REMOVE";
+  name: string;
+  handler: (events: (InsertStreamEvent<T> | RemoveStreamEvent<T>)[]) => Promise<void>;
 } | {
-  eventType: "ALL",
-  name: string,
-  handler: (events: Array<StreamEvent<T>>) => Promise<void>,
+  eventType: "ALL";
+  name: string;
+  handler: (events: StreamEvent<T>[]) => Promise<void>;
 };

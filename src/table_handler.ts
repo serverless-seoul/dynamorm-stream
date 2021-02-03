@@ -13,12 +13,12 @@ export class TableHandler<T extends Table> {
   constructor(
     public readonly tableClass: ITable<T>,
     private readonly strategy: "Map" | "Series" = "Series",
-    private readonly handlers: Array<HandlerDefinition<T>>,
+    private readonly handlers: HandlerDefinition<T>[],
     private readonly catchError: (
       handlerDefinition: HandlerDefinition<T>,
-      events: Array<StreamEvent<T>>,
-      error: Error
-    ) => Promise<void> | void
+      events: StreamEvent<T>[],
+      error: Error,
+    ) => Promise<void> | void,
   ) {
   }
 
@@ -44,7 +44,7 @@ export class TableHandler<T extends Table> {
               } catch (error) {
                 this.catchError(handler, records, error);
               }
-            })
+            }),
           );
           break;
       }
@@ -52,13 +52,13 @@ export class TableHandler<T extends Table> {
   }
 }
 
-async function executeHandler<T>(handlerDefinition: HandlerDefinition<T>, records: Array<StreamEvent<T>>) {
+async function executeHandler<T>(handlerDefinition: HandlerDefinition<T>, records: StreamEvent<T>[]) {
   const { handler, filteredRecords } = (() => {
     switch (handlerDefinition.eventType) {
       case "INSERT":
         return {
           handler: handlerDefinition.handler,
-          filteredRecords: valueFilter(records.map((record) => record.type === "INSERT" ? record : null))
+          filteredRecords: valueFilter(records.map((record) => record.type === "INSERT" ? record : null)),
         };
       case "MODIFY":
         return {
@@ -101,7 +101,7 @@ async function executeHandler<T>(handlerDefinition: HandlerDefinition<T>, record
   }
 }
 
-function valueFilter<T>(array: Array<T | undefined | null>) {
+function valueFilter<T>(array: (T | undefined | null)[]) {
   const res: T[] = [];
   array.forEach((item) => {
     if (item !== undefined && item !== null) {

@@ -104,8 +104,8 @@ describe("E2E", () => {
           ApproximateCreationDateTime: 1489631700,
           NewImage: AWS.DynamoDB.Converter.marshall(user.serialize()),
         },
-        eventSourceARN: "arn:aws:dynamodb:us-east-1:921281748045:table/users/stream/2017-12-22T02:02:25.496"
-      } as any]
+        eventSourceARN: "arn:aws:dynamodb:us-east-1:921281748045:table/users/stream/2017-12-22T02:02:25.496",
+      } as any],
     });
 
     expect(userInsertHandlerCalled).to.be.eq(true);
@@ -142,7 +142,7 @@ describe(StreamHandler.name, () => {
           }],
           async (handlerDef, events, error) => {
             //
-          })
+          }),
       ]);
     }).to.throw("You can't put more than one handler for given table: users");
   });

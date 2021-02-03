@@ -27,7 +27,7 @@
     "test": "AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=mock AWS_SECRET_ACCESS_KEY=mock mocha -t 20000 dst/**/__test__/**/*.js",
     "test:ci": "npm run test -- --forbid-only",
     "prepublishOnly": "npm run build",
-    "lint": "tslint -p tsconfig.json -c tslint.json 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
   "author": "@serverless-seoul",
   "engines": {
